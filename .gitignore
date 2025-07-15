@@ -1,0 +1,95 @@
+# ===================================================================
+# Python & Virtual Environments
+# ===================================================================
+# Python 캐시 파일
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# 가상환경 폴더 (필요에 따라 주석 해제)
+env/
+venv/
+virtualenv/
+.venv/
+
+# 패키징 및 설치 관련 파일
+*.egg-info/
+*.egg
+dist/
+build/
+wheels/
+*.whl
+
+# ===================================================================
+# Deep Learning Specifics
+# ===================================================================
+# 1. 데이터셋 (매우 중요!)
+# 데이터는 절대로 Git으로 관리하지 않는다.
+data/
+datasets/
+*.csv
+*.tsv
+*.json
+*.xml
+# 이미지/영상 데이터 (폴더 단위로 관리하는 것을 추천)
+# 예: raw_images/, processed_data/ 등
+
+# 2. 모델 체크포인트 및 학습된 모델
+# 용량이 매우 크므로 절대 포함하지 않는다.
+models/
+saved_models/
+checkpoints/
+weights/
+*.pt
+*.pth
+*.h5
+*.ckpt
+*.pb
+*.onnx
+
+# 3. 로그 및 실험 결과
+# TensorBoard, W&B, 일반 로그 파일 등
+logs/
+runs/
+output/
+results/
+tb_logs/
+wandb/
+
+# 4. 캐시 파일
+# 라이브러리(huggingface, etc.)가 생성하는 캐시
+.cache/
+
+# ===================================================================
+# IDE & System Files
+# ===================================================================
+# OS 생성 파일
+.DS_Store
+Thumbs.db
+._*
+
+# IDE 설정 파일
+.idea/      
+# PyCharm, IntelliJ
+.vscode/    
+# Visual Studio Code (단, 팀 전체 공유 설정은 예외 처리 가능)
+*.sublime-project
+*.sublime-workspace
+
+# ===================================================================
+# Jupyter Notebook
+# ===================================================================
+.ipynb_checkpoints
+profile_default/
+nbextensions/
+
+# ===================================================================
+# Secrets & Configuration
+# ===================================================================
+# API 키, 비밀번호 등이 담긴 환경 변수 파일
+.env
+*.env.*
+secrets.yaml
+config.ini 
+# 민감 정보가 있다면 포함
