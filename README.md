@@ -46,3 +46,5 @@ AI03-Project-1/
 ├── ProjectLog.md            # 프로젝트1 개발 일지 작성⭐
 └── README.md                # 프로젝트 구조 업데이트
 ```
+
+TBU..
