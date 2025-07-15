@@ -122,7 +122,4 @@ git checkout main
 # 2. 로컬에 있던 작업용 브랜치 삭제
 git branch -d feature/new-model
 ```
-
-(GitHub에 있는 원격 브랜치는 PR이 Merge 될 때 삭제하는 옵션이 있으니 그걸 사용하면 편해.)
-
 -----
