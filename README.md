@@ -1,6 +1,7 @@
 # AI03-Project-1
 Sprint AI03 프로젝트 1번입니다
 
+```bash
 AI03-Project-1/
 ├── data/                    # 원본 및 전처리된 데이터
 │   ├── raw/                 # 원본 데이터
@@ -36,3 +37,4 @@ AI03-Project-1/
 ├── environment.yml          # Conda 환경 파일 (선택)
 ├── .gitignore
 └── README.md
+```
