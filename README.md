@@ -18,7 +18,7 @@ AI03-Project-1/
 ├── notebooks/               # 실험/EDA용 Jupyter 노트북
 │   └── 250714_수현_[ooooo].ipynb         #  ex) 250714_수현_[데이터전처리].ipynb
 │
-├── src/                     # 핵심 코드
+├── src/                     # 핵심 코드 ⭐ 각자 역할별로 업데이트 해야하는 소스코드
 │   ├── __init__.py
 │   ├── dataset.py           # Custom Dataset
 │   ├── model.py             # 모델 정의
@@ -30,7 +30,7 @@ AI03-Project-1/
 ├── experiments/             # 실험 로그 및 결과 저장
 │   ├── exp_250714/          #               
 │   │   ├── config.yaml      # 실험 설정
-│   │   ├── model.pt         # 모델 가중치 ⭐ 구글드라이브로 공유(예정)
+│   │   ├── model.pt         # 모델 가중치 ✔ 구글드라이브로 공유(예정)
 │   │   └── results.json     # 결과 기록
 │   └── ...
 │
@@ -48,3 +48,5 @@ AI03-Project-1/
 ```
 
 TBU..
+
+TBU2
