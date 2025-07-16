@@ -101,7 +101,7 @@ git push origin feature/new-model
 
 ### **Step 5: 내 코드를 합쳐달라고 요청하기 (Pull Request)**
 
-가장 중요한 단계야\! GitHub 저장소 페이지로 가서, 내가 방금 `push`한 브랜치를 `main` 브랜치에 합쳐달라는 \*\*Pull Request(PR)\*\*를 생성.
+가장 중요한 단계\! GitHub 저장소 페이지로 가서, 내가 방금 `push`한 브랜치를 `main` 브랜치에 합쳐달라는 \*\*Pull Request(PR)\*\*를 생성.
 
   - **PR 설명 Tip:** 내가 왜 이 작업을 했고, 어떤 변경사항이 있는지, 팀원이 어떤 부분을 중점적으로 봐줬으면 하는지 상세하게 작성하면 팀원들의 시간을 아껴줄 수 있음.
 
