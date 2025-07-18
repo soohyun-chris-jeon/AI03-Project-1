@@ -67,22 +67,35 @@
 
 ### 프로젝트 역할 분배 
 #### 🟣 Project Manage - (수현)
+#### 🟣 Project Manage - 수현
 - 프로젝트의 협업 과정을 매니징하는 역할
 - 애자일/스프린트 방식으로 단위를 분리하고 회의를 주도
 - 깃헙 레포지 관리, Pull request 컨펌 & merge
 
 #### 🟣 Data Engineer - 1명 (은영)
+- 깃헙 레포지 관리, Pull request 컨펌 & merge
+
+#### 🟣 Data Engineer - 1명(은영)
 - 데이터 수집, 정제 및 전처리를 담당하고 데이터 파이프라인을 구축
 - 데이터 불균형 처리
 - Augmentation 기법
 - Data imbalance
 
 #### 🟣 Model Architect	- 2명 (계승, 진석)
+- 데이터 불균형 처리
+- Augmentation 기법
+- Data imbalance
+
+#### 🟣 Model Architect	- 2명(계승, 진석)
 - 딥러닝 모델을 설계하고 아키텍처를 결정
 - YOLO 계열 (진석)
 - R-CNN/DETR 계열 **(계승)**
 
 #### 🟣 Experimentation Lead - (수현)
+- YOLO 계열 (진석)
+- R-CNN/DETR 계열 **(계승)**
+
+#### 🟣 Experimentation Lead - 1명
 - 다양한 실험을 주도하고, 하이퍼파라미터 튜닝 및 모델 성능 평가를 담당
 - 학습 방식 고도화
 - 평가 매트릭 
