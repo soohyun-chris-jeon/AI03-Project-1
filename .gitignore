@@ -32,6 +32,7 @@ datasets/
 *.tsv
 *.json
 *.xml
+yolov8_inference_results/
 # 이미지/영상 데이터 (폴더 단위로 관리하는 것을 추천)
 # 예: raw_images/, processed_data/ 등
 
