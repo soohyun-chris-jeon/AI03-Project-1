@@ -1,13 +1,13 @@
-# AI03-Project-1
+# 🟣 AI03-Project-1
 - Sprint AI03 프로젝트#1 레포입니다.
 
-## Intro
+## ⚪ Intro
 - 프로젝트 기간:  7/15(화) ~ 7/31(목)
 - 최종 발표: 7/31(목) 
 - [프로젝트1 가이드](https://codeit.notion.site/AI-1b36fd228e8d80bd9f6dc99b409f952c)
 
 
-## 프로젝트 구조
+## ⚪ 프로젝트 구조
 ```bash
 AI03-Project-1/
 ├── data/                    # 원본 및 전처리된 데이터
@@ -48,7 +48,7 @@ AI03-Project-1/
 ```
 
 
-## 협업 워크플로우 (Collaborator 모델)
+## ⚪ 협업 워크플로우 (Collaborator 모델)
 
 **`main` 브랜치에는 절대로 직접 `push` 하지 않는다.** 모든 코드는 `Pull Request`를 통해서만 `main`에 합쳐진다.
 
@@ -123,3 +123,25 @@ git checkout main
 git branch -d feature/new-model
 ```
 -----
+
+
+
+## ⚪ 브랜치 네이밍 컨벤션
+
+### 기본 형식
+> type/name-task
+
+### 타입 예시
+- **feat**: 기능 개발
+- **fix**: 버그 수정
+- **exp**: 실험
+- **refactor**: 코드 구조 정리
+- **doc**: 문서화
+- **chore**: 빌드, CI 등 설정 관련
+- **test**: 테스트 코드
+
+### 예시
+- feat/soohyun-data-preprocessing
+- fix/jinseok-training-bug
+- exp/gs-yolov5-sweep
+- doc/soohyun-add-instructions

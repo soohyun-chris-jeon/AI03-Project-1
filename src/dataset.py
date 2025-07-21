@@ -5,18 +5,20 @@
 
 from pathlib import Path  # payhon path
 
-# Data Augmentation 패키지: Albumentations
 import albumentations as A
 import cv2  # OpenCV - 고급 이미지/비디오 처리
 import torch
 from torch.utils.data import Dataset  # 커스텀 데이터셋, 배치 로딩
 
+# Data Augmentation 패키지: torchvision 보다 바운딩 박스 변환에 더 유리
+
+
 # PyTorch 이미지 전처리
 # PyTorch 데이터 처리
 
 
-# 데이터 증강 (Augmentation) : Albumentations 라이브러리 사용
-# 를 사용하는 것이 바운딩 박스 변환에 더 유리
+# (1) 데이터 증강 (Augmentation) : Albumentations 라이브러리 사용
+# 실험적으로 중요한 train_transforms
 train_transforms = A.Compose(
     [
         A.Resize(512, 512),
@@ -29,13 +31,20 @@ train_transforms = A.Compose(
     bbox_params=A.BboxParams(format="pascal_voc", label_fields=["labels"]),
 )  # bbox 형식은 pascal_voc: [xmin, ymin, xmax, ymax]
 
-test_transforms = A.Compose(
+val_transforms = A.Compose(
     [
         A.Resize(512, 512),
         A.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225)),
         A.pytorch.ToTensorV2(),
     ],
     bbox_params=A.BboxParams(format="pascal_voc", label_fields=["labels"]),
+)
+test_transforms = A.Compose(
+    [
+        A.Resize(512, 512),
+        A.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225)),
+        A.pytorch.ToTensorV2(),
+    ]
 )
 
 
@@ -72,7 +81,7 @@ class PillDataset(Dataset):
 
         # --- mode에 따라 다르게 동작 ---
         # 학습 모드일 경우, 어노테이션(target)까지 준비
-        if self.mode == "train":
+        if self.mode in ["train", "val"]:
             # 현재 이미지에 해당하는 모든 어노테이션(알약)을 df에서 필터링
             records = self.df[self.df["file_name"] == image_id]
 
@@ -81,30 +90,32 @@ class PillDataset(Dataset):
             boxes[:, 2] = boxes[:, 0] + boxes[:, 2]
             boxes[:, 3] = boxes[:, 1] + boxes[:, 3]
 
-            labels = records["category_id"].values
+            # labels = records["category_id"].values
+            labels = records["label_idx"].values
 
+            # Augmentation 적용
+            if self.transforms:
+                #  NumPy 배열과 리스트를 그대로 전달
+                transformed = self.transforms(image=image, bboxes=boxes, labels=labels)
+                image = transformed["image"]
+                boxes = transformed["bboxes"]
+                labels = transformed["labels"]
+
+            # 모든 증강이 끝난 후, 마지막에 텐서로 변환
             target = {
                 "boxes": torch.as_tensor(boxes, dtype=torch.float32),
                 "labels": torch.as_tensor(labels, dtype=torch.int64),
             }
 
-            # Augmentation 적용
-            if self.transforms:
-                transformed = self.transforms(
-                    image=image, bboxes=target["boxes"], labels=target["labels"]
-                )
-                image = transformed["image"]
-                target["boxes"] = torch.as_tensor(
-                    transformed["bboxes"], dtype=torch.float32
-                )
-                if len(target["boxes"]) == 0:
-                    target["boxes"] = torch.zeros((0, 4), dtype=torch.float32)
+            # 증강 후 bbox가 사라졌을 경우 처리
+            if len(target["boxes"]) == 0:
+                target["boxes"] = torch.zeros((0, 4), dtype=torch.float32)
 
             return image, target
 
         # 테스트 모드일 경우, 이미지와 파일 이름만 반환
         elif self.mode == "test":
-            # 테스트 시에는 보통 기본적인 리사이즈, 정규화만 적용
+            # 테스트 시에는 기본적인 리사이즈, 정규화만 적용
             if self.transforms:
                 transformed = self.transforms(image=image)
                 image = transformed["image"]
