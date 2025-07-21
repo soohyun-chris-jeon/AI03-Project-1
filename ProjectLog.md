@@ -102,18 +102,15 @@
 - 결과 시각화
 
 ---
-
 ### Future work
 - baseline 코드 완성 ⭐⭐⭐
 - 멘토링 7/20(일)
 - 7/21 월
 
----
 - 학습 방식 고도화
 - 평가 매트릭 
 - 결과 시각화
 
----
 
 ### Future work
 - baseline 코드 완성 ⭐⭐⭐
@@ -121,3 +118,36 @@
 - 7/21 월
 
 ---
+
+
+
+## 2025.07.21 월
+### 현황 파악
+- 수현: **Baseline 코드** 완성(주피터 노트북). 모듈화 작업 진행 필요
+- 계승: 데이터 전처리
+- 은영: 
+- 진석: YOLO 코드 학습까지
+
+### Baseline 코드 특징(ver.250721)
+- .ipynb 파일. 아직 모듈화 작업 동기화 x
+- json 어노테이션 데이터 parsing을 하여 DataFrame 형태로 받아옴
+- Data Augmentation 부분에서 torchvision이 아닌 **Albumentations**를 활용함. Object Detection에서 bbox도 안정적으로 변환이 가능한 기법
+- **StratifiedGroupKFold**로 데이터 스플릿. 데이터 클래스의 불균형과 데이터 누수를 고려한 버전
+
+
+### 앞으로 진행방향
+- Baseline 코드를 중심으로 본인의 역할을 수행
+- 대부분의 실험은 주피터 노트북으로 진행하며, 유의미한 결과가 있으면 깃허브 PL
+
+- 수현: 
+    1. train.py, eval.py 고도화하는 작업
+        * earlystopping, optimizer + scheduler 조합 찾는거
+        * mAP 말고 다른 
+        * visualization 추가    
+    2. 전체 모듈화 작업, 코드(깃허브) 관리
+
+- 계승:
+    1. 10개 후보, 앙상블
+
+- 진석:
+    1. YOLO 모델에 맞춰서 parsing하는 작업이 필요
