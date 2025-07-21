@@ -72,11 +72,3 @@ def visualize_sample(dataset, classes):
 
     plt.axis("off")
     plt.show()
-
-
-# 사용 예시 (train_loader 생성 후)
-print("--- 증강이 적용된 훈련 데이터 샘플 ---")
-visualize_sample(train_dataset, classes)
-
-print("--- 원본 검증 데이터 샘플 ---")
-visualize_sample(val_dataset, classes)
