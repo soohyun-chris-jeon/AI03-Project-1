@@ -43,7 +43,7 @@ AI03-Project-1/
 ├── scripts/                 # 쉘스크립트, 파이프라인 자동화 등
 │   └── train.sh
 │
-├── output/                 # 로그, 시각화 이미지, confusion matrix 등 ⭐ 구글드라이브로 공유(예정)
+├── output/                 # 캐글 Submission 파일⭐, 로그, 시각화 이미지, confusion matrix 등
 │   └── figures/
 │
 ├── requirements.txt         # 패키지 목록 (pip 기반)

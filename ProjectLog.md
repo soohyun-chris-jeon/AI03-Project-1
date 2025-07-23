@@ -152,10 +152,15 @@
 - 진석:
     1. YOLO 모델에 맞춰서 parsing하는 작업이 필요
 
-## 2025.07.21 화
+## 2025.07.22 화
 ### Kaggle submission 준비하기
 - 팀원 초대
 - submission 방법 정리하고 팀원들에게 공유
 
 ### Hyper-parameter 통일
 - 특히 Batch-size는 모든 팀원의 컴퓨팅 환경에서 돌아가야함
+- 확인 완료
+
+## 2025.07.23 수
+- 캐글 submission 제출 완료.
+- src/submit.py 업로드
