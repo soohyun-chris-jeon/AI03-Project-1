@@ -1,3 +1,7 @@
+# ====================================================================
+# submit.py
+# ====================================================================
+# 캐글 submission에 필요한 csv파일을 생성합니다.
 # src/submit.py
 
 import datetime
@@ -21,10 +25,13 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 from utils import get_unique_filepath
 
-# --- 설정 ---
-MODEL_CHECKPOINT = "./experiments/best_model.pt"  # 사용할 모델 경로
+# --- # 사용할 모델 경로 ---
 
-OUTPUT_DIR = Path("./output")  # AI03-Project-1/output 폴더에 저장됨
+# 사용될 모델의 경로
+MODEL_CHECKPOINT = "./experiments/best_model.pt"
+
+# csv파일이 저장될 경로
+OUTPUT_DIR = Path("./output")  # 프로젝트 폴더 'AI03-Project-1/output 경로에 저장됨
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 today_str = datetime.date.today().strftime("%y%m%d")
@@ -164,14 +171,14 @@ def main():
         ]
     ]
 
-    # ⭐ 2. 파일을 저장하기 직전에, 중복되지 않는 최종 경로를 얻어옴
+    # 2. 파일을 저장하기 직전에, 중복되지 않는 최종 경로를 얻어옴
     unique_submission_path = get_unique_filepath(SUBMISSION_FILE)
 
-    # ⭐ 3. 최종 경로에 파일 저장
+    # 3. 최종 경로에 파일 저장
     submission_df.to_csv(unique_submission_path, index=False)
 
     print("\n--- Prediction Finished! ---")
-    # ⭐ 4. 저장된 실제 파일 경로를 출력
+    # 4. 저장된 실제 파일 경로를 출력
     print(f"Submission file saved to '{unique_submission_path}'")
     print(submission_df.head())
 
