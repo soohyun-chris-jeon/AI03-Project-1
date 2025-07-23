@@ -16,16 +16,22 @@ AI03-Project-1/
 │   └── external/            # 외부에서 받은 공개 데이터 등
 │
 ├── notebooks/               # 실험/EDA용 Jupyter 노트북
-│   └── 250714_수현_[ooooo].ipynb         #  ex) 250714_수현_[데이터전처리].ipynb
+│   ├── BASELINE.ipynb             # 실험에 사용될 팀공식 Baseline 코드
+│   └── SOOHYUN_ooooo_250721.ipynb         #  개인 작업물(ex. 7월21에 작업한 ooooo.ipynb)
+
 │
 ├── src/                     # 핵심 코드 ⭐ 각자 역할별로 업데이트 해야하는 소스코드
-│   ├── __init__.py
-│   ├── dataset.py           # Custom Dataset
-│   ├── model.py             # 모델 정의
-│   ├── train.py             # 학습 루프
-│   ├── eval.py              # 평가 로직
-│   ├── config.py            # 설정 값 정리 (예: argparse or dict)
-│   └── utils.py             # 공통 함수들 (seed 고정, metrics 등)
+│   ├── data/
+│   │   ├── __init__.py
+│   │   ├── dataset.py        # PillDataset 클래스
+│   │   ├── prepare_data.py   # Raw -> Processed 데이터 변환 스크립트
+│   │   └── transforms.py     # Albumentations 데이터 증강 정책
+│   ├── dataset.py            # Custom Dataset
+│   ├── model.py              # 모델 정의
+│   ├── train.py              # 학습 루프
+│   ├── eval.py               # 평가 로직
+│   ├── config.py             # 설정 값 정리 (예: argparse or dict)
+│   └── utils.py              # 공통 함수들 (seed 고정, metrics 등)
 │
 ├── experiments/             # 실험 로그 및 결과 저장
 │   ├── exp_250714/          #               
