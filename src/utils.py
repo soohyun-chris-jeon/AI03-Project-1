@@ -116,8 +116,16 @@ def parse_raw_annotations(ann_dir: Path) -> pd.DataFrame:
 
 class EarlyStopping:
     """주어진 patience 후 검증 점수가 향상되지 않으면 학습을 조기 중단시킵니다."""
-    def __init__(self, patience=7, verbose=False, delta=0, mode='min', 
-                 path='../experiments/best_model.pt', evaluation_name='score'):
+
+    def __init__(
+        self,
+        patience=7,
+        verbose=False,
+        delta=0,
+        mode="min",
+        path="../experiments/best_model.pt",
+        evaluation_name="score",
+    ):
         """
         Args:
             patience (int): 검증 점수가 향상된 후 기다릴 에폭 수.
@@ -137,20 +145,28 @@ class EarlyStopping:
         self.mode = mode
         self.evaluation_name = evaluation_name
 
-        if self.mode == 'min':
-            self.val_score = np.Inf
+        if self.mode == "min":
+            self.val_score = np.inf
         else:
-            self.val_score = -np.Inf
+            self.val_score = -np.inf
 
     def __call__(self, score, model):
-        
+
         # mode에 따른 점수 비교
         is_best = False
-        if self.mode == 'min':
-            if score < self.best_score - self.delta if self.best_score is not None else True:
+        if self.mode == "min":
+            if (
+                score < self.best_score - self.delta
+                if self.best_score is not None
+                else True
+            ):
                 is_best = True
-        else: # mode == 'max'
-            if score > self.best_score + self.delta if self.best_score is not None else True:
+        else:  # mode == 'max'
+            if (
+                score > self.best_score + self.delta
+                if self.best_score is not None
+                else True
+            ):
                 is_best = True
 
         if self.best_score is None:
@@ -170,9 +186,11 @@ class EarlyStopping:
         """Saves model when validation score improves."""
         if self.verbose:
             # mode에 따라 'decreased' 또는 'increased'를 동적으로 표현
-            change_text = "decreased" if self.mode == 'min' else "increased"
-            print(f"{self.evaluation_name} {change_text} ({self.val_score:.6f} --> {score:.6f}). Saving model ...")
-        
+            change_text = "decreased" if self.mode == "min" else "increased"
+            print(
+                f"{self.evaluation_name} {change_text} ({self.val_score:.6f} --> {score:.6f}). Saving model ..."
+            )
+
         save_dir = os.path.dirname(self.path)
         if not os.path.exists(save_dir):
             os.makedirs(save_dir)
@@ -180,3 +198,23 @@ class EarlyStopping:
 
         torch.save(model.state_dict(), self.path)
         self.val_score = score
+
+
+def get_unique_filepath(filepath: Path) -> Path:
+    """
+    주어진 파일 경로가 이미 존재할 경우, 파일 이름 뒤에 (2), (3)... 등을 붙여
+    중복되지 않는 새로운 경로를 반환합니다.
+    """
+    if not filepath.exists():
+        return filepath
+
+    parent = filepath.parent
+    stem = filepath.stem  # 파일 이름 (확장자 제외)
+    suffix = filepath.suffix  # 확장자
+
+    counter = 2
+    while True:
+        new_filepath = parent / f"{stem}({counter}){suffix}"
+        if not new_filepath.exists():
+            return new_filepath
+        counter += 1

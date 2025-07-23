@@ -17,6 +17,7 @@ NUM_EPOCHS = 50
 LEARNING_RATE = 0.005
 MOMENTUM = 0.9
 WEIGHT_DECAY = 0.0005
+NUM_CLASSES = 73 + 1
 
 # --- 데이터 경로 설정 ---
 # DATA_ROOT = path
