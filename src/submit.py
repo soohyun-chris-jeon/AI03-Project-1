@@ -19,7 +19,7 @@ import pandas as pd
 import torch
 import utils
 from albumentations.pytorch import ToTensorV2
-from data.dataset import PillDataset
+from assets.dataset import PillDataset
 from model import get_model
 from torch.utils.data import DataLoader
 from tqdm import tqdm

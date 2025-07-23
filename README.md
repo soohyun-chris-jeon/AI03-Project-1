@@ -11,43 +11,43 @@
 ```bash
 AI03-Project-1/
 ├── data/                    # 원본 및 전처리된 데이터
-│   ├── raw/                 # 원본 데이터 ⭐ [Ai Hub 경구약제 이미지 데이터] 경로
-│   ├── processed/           # 전처리된 데이터
-│   └── external/            # 외부에서 받은 공개 데이터 등
+│   ├── raw/                 # 원본 데이터 [Ai Hub 경구약제 이미지 데이터] 경로
+│   ├── processed/           # 전처리된 데이터(label_map.json, train_df.csv 등)
+│   └── external/            # 외부에서 받은 공개 데이터 등 x
 │
-├── notebooks/               # 실험/EDA용 Jupyter 노트북
+├── notebooks/               # 실험/EDA용 Jupyter 노트북 ⭐
 │   ├── BASELINE.ipynb             # 실험에 사용될 팀공식 Baseline 코드
 │   └── SOOHYUN_ooooo_250721.ipynb         #  개인 작업물(ex. 7월21에 작업한 ooooo.ipynb)
 
 │
 ├── src/                     # 핵심 코드 ⭐ 각자 역할별로 업데이트 해야하는 소스코드
-│   ├── data/
+│   ├── assets/               # data에 관련된 대부분의 코드를 담당하게 됨 (은영) 
 │   │   ├── __init__.py
 │   │   ├── dataset.py        # PillDataset 클래스
 │   │   ├── prepare_data.py   # Raw -> Processed 데이터 변환 스크립트
-│   │   └── transforms.py     # Albumentations 데이터 증강 정책
-│   ├── dataset.py            # Custom Dataset
-│   ├── model.py              # 모델 정의
-│   ├── train.py              # 학습 루프
-│   ├── eval.py               # 평가 로직
+│   │   └── transforms.py     # Albumentations 기반 데이터 Augmentation
+│   ├── model.py              # 모델 정의 (계승, 진석)
+│   ├── train.py              # 학습 루프 (수현)
+│   ├── eval.py               # 평가 로직 (수현)
 │   ├── config.py             # 설정 값 정리 (예: argparse or dict)
+│   ├── submit.py             # 캐글 제출용 csv 파일
 │   └── utils.py              # 공통 함수들 (seed 고정, metrics 등)
 │
 ├── experiments/             # 실험 로그 및 결과 저장
 │   ├── exp_250714/          #               
 │   │   ├── config.yaml      # 실험 설정
-│   │   ├── model.pt         # 모델 가중치 ✔ 구글드라이브로 공유(예정)
-│   │   └── results.json     # 결과 기록
+│   │   ├── model.pt         # 모델 파라미터 저장값 ⭐ 구글드라이브로 공유
+│   │   └── results.json     # 결과 기록 등
 │   └── ...
 │
 ├── scripts/                 # 쉘스크립트, 파이프라인 자동화 등
 │   └── train.sh
 │
-├── output/                 # 캐글 Submission 파일⭐, 로그, 시각화 이미지, confusion matrix 등
+├── output/                 # 캐글 Submission 파일(.csv)⭐, 로그, 시각화 이미지, confusion matrix 등
 │   └── figures/
 │
 ├── requirements.txt         # 패키지 목록 (pip 기반)
-├── environment.yml          # Conda 환경 파일 (선택)
+├── environment.yml          # Conda 환경 파일 
 ├── .gitignore
 ├── ProjectLog.md            # 프로젝트1 개발 일지 작성⭐
 └── README.md                # 프로젝트 구조 업데이트
@@ -151,3 +151,7 @@ git branch -d feature/new-model
 - fix/jinseok-training-bug
 - exp/gs-yolov5-sweep
 - doc/soohyun-add-instructions
+
+
+## ⚪ 클라우드 활용
+- git에 올라가지 않는 파일들(.pt, .csv, 각종 이미지 파일)은 구글 드라이브로 공유

@@ -14,8 +14,8 @@ import pandas as pd
 import torch
 from model import get_model
 from sklearn.model_selection import StratifiedGroupKFold
-from src.data.dataset import PillDataset
-from src.data.transforms import get_train_transforms, get_val_transforms
+from src.assets.dataset import PillDataset
+from src.assets.transforms import get_train_transforms, get_val_transforms
 from torch.utils.data import DataLoader
 from torchmetrics.detection.mean_ap import MeanAveragePrecision
 from tqdm import tqdm
