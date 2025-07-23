@@ -26,7 +26,6 @@ AI03-Project-1/
 │   │   ├── dataset.py        # PillDataset 클래스
 │   │   ├── prepare_data.py   # Raw -> Processed 데이터 변환 스크립트
 │   │   └── transforms.py     # Albumentations 데이터 증강 정책
-│   ├── dataset.py            # Custom Dataset
 │   ├── model.py              # 모델 정의
 │   ├── train.py              # 학습 루프
 │   ├── eval.py               # 평가 로직
