@@ -4,6 +4,7 @@
 # 캐글 submission에 필요한 csv파일을 생성합니다.
 # src/submit.py
 
+import argparse  # argparse 라이브러리 import
 import datetime
 import json
 import os
@@ -28,7 +29,7 @@ from utils import get_unique_filepath
 # --- # 사용할 모델 경로 ---
 
 # 사용될 모델의 경로
-MODEL_CHECKPOINT = "./experiments/best_model.pt"
+# MODEL_CHECKPOINT = "./experiments/best_model.pt"
 
 # csv파일이 저장될 경로
 OUTPUT_DIR = Path("./output")  # 프로젝트 폴더 'AI03-Project-1/output 경로에 저장됨
@@ -52,7 +53,7 @@ def extract_image_id(filename: str) -> int:
         return hash(filename)
 
 
-def main():
+def main(args):
     print("--- Prediction Start ---")
 
     # 1. 라벨 맵 로드 (모델이 예측한 idx를 원래 category_id로 되돌리기 위함)
@@ -67,9 +68,9 @@ def main():
 
     # 2. 모델 로드
     model = get_model(num_classes=NUM_CLASSES).to(config.DEVICE)
-    model.load_state_dict(torch.load(MODEL_CHECKPOINT, map_location=config.DEVICE))
+    model.load_state_dict(torch.load(args.checkpoint, map_location=config.DEVICE))
     model.eval()
-    print(f"Model loaded from {MODEL_CHECKPOINT}")
+    print(f"Model loaded from {args.checkpoint}")
 
     # 3. 테스트 데이터 준비
     test_image_dir = "./data/raw/ai03-level1-project/test_images"  # 테스트 이미지 경로
@@ -184,4 +185,33 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    # 6. 수정: argparse로 커맨드 라인 인자 처리
+    parser = argparse.ArgumentParser(
+        description="Create a submission file for object detection."
+    )
+
+    # 받을 인자들을 정의
+    parser.add_argument(
+        "--checkpoint",
+        type=str,
+        required=True,
+        default="./experiments/best_model.pt",
+        help="Path to the model checkpoint file (.pt)",
+    )
+    parser.add_argument(
+        "--model-name",
+        type=str,
+        default="BASELINE",
+        help="Name of the model architecture to use",
+    )
+    parser.add_argument(
+        "--score-threshold",
+        type=float,
+        default=0.5,
+        help="Score threshold for predictions",
+    )
+
+    args = parser.parse_args()
+
+    # 파싱된 인자를 main 함수에 전달
+    main(args)

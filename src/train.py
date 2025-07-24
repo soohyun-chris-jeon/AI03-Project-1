@@ -80,34 +80,38 @@ def train(args):
 
     # ====================================================================
     # --- 4. 모델, 옵티마이저, 스케줄러, Metric 정의 ---
-    model = get_model(num_classes, config.MODEL_NAME, config.USE_PRETRAINED)
+    model = get_model(num_classes, args.MODEL_NAME, config.USE_PRETRAINED)
     model.to(config.DEVICE)
 
     params = [p for p in model.parameters() if p.requires_grad]
     optimizer = torch.optim.AdamW(
-        params, lr=config.LEARNING_RATE, weight_decay=config.WEIGHT_DECAY
+        params, lr=args.LEARNING_RATE, weight_decay=args.WEIGHT_DECAY
     )
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
-        optimizer, T_max=config.NUM_EPOCHS, eta_min=1e-6
+        optimizer, T_max=args.NUM_EPOCHS, eta_min=1e-6
     )
 
     # --- 5. 학습 루프 ---
     # ====================================================================
     metric = MeanAveragePrecision(box_format="xyxy").to(config.DEVICE)
     early_stopping = EarlyStopping(
-        patience=5, verbose=True, mode="max", evaluation_name="Validation mAP"
+        patience=5,
+        verbose=True,
+        mode="max",
+        evaluation_name="Validation mAP",
+        path="../experiments/" + args.MODEL_NAME + "pt",
     )
 
     train_losses = []
     val_losses = []
     print("--- Start Training ---")
-    for epoch in range(config.NUM_EPOCHS):
+    for epoch in range(args.NUM_EPOCHS):
         # Training
         model.train()
         running_loss = 0.0
         loop = tqdm(
             train_loader,
-            desc=f"Epoch [{epoch+1}/{config.NUM_EPOCHS}]",
+            desc=f"Epoch [{epoch+1}/{args.NUM_EPOCHS}]",
             dynamic_ncols=True,
         )
 
@@ -126,6 +130,7 @@ def train(args):
             loop.set_postfix(loss=current_avg_loss)
 
         avg_train_loss = running_loss / len(train_loader)
+        train_losses.append(avg_train_loss)
 
         # =====================================
         #  Validation Step
@@ -144,6 +149,7 @@ def train(args):
                 predictions = model(images)
 
             metric.update(predictions, targets)
+
             # IoU 평가 메트릭
             for i in range(len(predictions)):
                 pred_boxes = predictions[i]["boxes"]
@@ -207,21 +213,24 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Object Detection Model Training")
 
     # 여기서 실험마다 바꾸고 싶은 파라미터를 정의
-    parser.add_argument("--seed", type=int, default=config.SEED, help="Random seed")
+    parser.add_argument("--SEED", type=int, default=config.SEED, help="Random seed")
     parser.add_argument(
-        "--epochs",
+        "--NUM_EPOCHS",
         type=int,
         default=config.NUM_EPOCHS,
         help="Number of epochs to train",
     )
     parser.add_argument(
-        "--model-name", type=str, default=config.MODEL_NAME, help="Model name to use"
+        "--MODEL_NAME", type=str, default=config.MODEL_NAME, help="Model name to use"
     )
     parser.add_argument(
-        "--lr", type=float, default=config.LEARNING_RATE, help="Learning rate"
+        "--LEARNING_RATE",
+        type=float,
+        default=config.LEARNING_RATE,
+        help="Learning rate",
     )
     parser.add_argument(
-        "--weight-decay", type=float, default=config.WEIGHT_DECAY, help="Weight decay"
+        "--WEIGHT_DECAY", type=float, default=config.WEIGHT_DECAY, help="Weight decay"
     )
 
     # 실험 관리를 위한 이름. wandb와 연동할 때 매우 유용함.

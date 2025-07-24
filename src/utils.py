@@ -123,7 +123,7 @@ class EarlyStopping:
         verbose=False,
         delta=0,
         mode="min",
-        path="../experiments/best_model.pt",
+        path="./experiments/best_model.pt",
         evaluation_name="score",
     ):
         """

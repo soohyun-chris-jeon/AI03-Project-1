@@ -12,9 +12,9 @@ DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 SEED = 42
 
 # --- 학습 하이퍼파라미터 ---
-BATCH_SIZE = 32
+BATCH_SIZE = 16
 NUM_EPOCHS = 50
-LEARNING_RATE = 0.005
+LEARNING_RATE = 1e-4
 MOMENTUM = 0.9
 WEIGHT_DECAY = 0.0005
 NUM_CLASSES = 73 + 1

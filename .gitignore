@@ -28,7 +28,7 @@ wheels/
 # 데이터는 절대로 Git으로 관리하지 않는다.
 data/
 datasets/
-*.csv
+# *.csv
 *.tsv
 *.json
 *.xml
