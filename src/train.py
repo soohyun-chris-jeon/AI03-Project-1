@@ -215,6 +215,10 @@ if __name__ == "__main__":
     # 여기서 실험마다 바꾸고 싶은 파라미터를 정의
     parser.add_argument("--SEED", type=int, default=config.SEED, help="Random seed")
     parser.add_argument(
+        "--CSV", type=str, default=config.SAVE_PATH, help="processed train.csv"
+    )
+
+    parser.add_argument(
         "--NUM_EPOCHS",
         type=int,
         default=config.NUM_EPOCHS,
