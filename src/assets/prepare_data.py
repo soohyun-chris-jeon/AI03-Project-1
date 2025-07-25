@@ -20,6 +20,7 @@ RAW_DATA_DIR = BASE_DIR / "data/raw/ai03-level1-project"
 
 TRAIN_ANNO_DIR = RAW_DATA_DIR / "train_annotations"
 
+
 def expand_bbox_column(df: pd.DataFrame) -> pd.DataFrame:
     """'bbox' 리스트 컬럼을 4개의 개별 컬럼으로 확장합니다."""
     bbox_df = pd.DataFrame(
@@ -41,7 +42,9 @@ def create_label_map(df: pd.DataFrame) -> Dict:
         i: row.class_name for i, row in enumerate(unique_categories.itertuples())
     }
 
-    return {"id_to_idx": id_to_idx, "idx_to_name": idx_to_name}
+    idx_to_id = {v: k for k, v in id_to_idx.items()}
+
+    return {"id_to_idx": id_to_idx, "idx_to_id": idx_to_id, "idx_to_name": idx_to_name}
 
 
 def filter_invalid_bboxes(df: pd.DataFrame) -> pd.DataFrame:

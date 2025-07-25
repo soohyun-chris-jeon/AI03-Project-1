@@ -7,32 +7,58 @@
 
 import torchvision
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
+from torchvision.models.detection.rpn import AnchorGenerator
 
 
 def get_model(
     num_classes: int,
     model_name: str = "fasterrcnn_mobilenet_v3_large_fpn",
     pretrained: bool = True,
+    anchor_sizes=None,
+    aspect_ratios=None,
+    min_size: int = 350,
+    rpn_pre_nms_top_n: int = 2000,
+    rpn_post_nms_top_n: int = 1000,
 ):
     """
     지정된 이름과 클래스 개수에 맞는 pre-trained object detection 모델을 반환.
 
     Args:
-        num_classes (int): 타겟 클래스의 개수 (배경 포함).
-        model_name (str): 불러올 모델의 이름.
-        pretrained (bool): pre-trained 가중치를 사용할지 여부.
+        num_classes (int): 타겟 클래스 수 (배경 포함).
+        model_name (str): 모델 이름 (e.g., fasterrcnn_resnet50_fpn).
+        pretrained (bool): COCO pretrained weight 사용할지 여부.
+        anchor_sizes (list): anchor 사이즈 세트.
+        aspect_ratios (list): anchor 비율 세트.
+        min_size (int): 이미지 입력 크기.
+        rpn_pre_nms_top_n (int): RPN NMS 전 proposal 개수.
+        rpn_post_nms_top_n (int): RPN NMS 후 proposal 개수.
 
     Returns:
         torch.nn.Module: PyTorch 모델.
     """
     weights = "DEFAULT" if pretrained else None
-
+    # ====================================================================
+    # 1. Baseline 코드 모델
     if model_name == "fasterrcnn_mobilenet_v3_large_fpn":
         model = torchvision.models.detection.fasterrcnn_mobilenet_v3_large_fpn(
             weights=weights
         )
+    # ====================================================================
+    # 2. Faster-RCNN (resnet 기반)
     elif model_name == "fasterrcnn_resnet50_fpn":
-        model = torchvision.models.detection.fasterrcnn_resnet50_fpn(weights=weights)
+        if anchor_sizes is None:
+            anchor_sizes = ((8,), (16,), (24,), (32,), (40,))
+        if aspect_ratios is None:
+            aspect_ratios = ((0.5, 1.0, 2.0),) * len(anchor_sizes)
+        anchor_generator = AnchorGenerator(anchor_sizes, aspect_ratios)
+
+        model = torchvision.models.detection.fasterrcnn_resnet50_fpn(
+            weights=weights, rpn_anchor_generator=anchor_generator, min_size=min_size
+        )
+        # RPN proposal 개수 조정
+        model.rpn.pre_nms_top_n["training"] = rpn_pre_nms_top_n
+        model.rpn.post_nms_top_n["training"] = rpn_post_nms_top_n
+
     else:
         raise ValueError(f"지원하지 않는 모델 이름입니다: {model_name}")
 

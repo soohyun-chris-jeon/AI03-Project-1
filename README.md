@@ -25,10 +25,12 @@ AI03-Project-1/
 │   │   ├── __init__.py
 │   │   ├── dataset.py        # PillDataset 클래스
 │   │   ├── prepare_data.py   # Raw -> Processed 데이터 변환 스크립트
+│   │   ├── uitls.py          # dataset 관련 utils
 │   │   └── transforms.py     # Albumentations 기반 데이터 Augmentation
 │   ├── model.py              # 모델 정의 (계승, 진석)
 │   ├── train.py              # 학습 루프 (수현)
 │   ├── eval.py               # 평가 로직 (수현)
+│   ├── ensemble.py           # 최종 모델 앙상블
 │   ├── config.py             # 설정 값 정리 (예: argparse or dict)
 │   ├── submit.py             # 캐글 제출용 csv 파일
 │   └── utils.py              # 공통 함수들 (seed 고정, metrics 등)
