@@ -52,7 +52,7 @@ weights/
 # TensorBoard, W&B, 일반 로그 파일 등
 logs/
 runs/
-# output/
+output/
 results/
 tb_logs/
 wandb/
