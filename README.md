@@ -7,7 +7,7 @@
 - [프로젝트1 가이드](https://codeit.notion.site/AI-1b36fd228e8d80bd9f6dc99b409f952c)
 
 
-## ⚪ 프로젝트 구조 (25.07.23 updated)
+## ⚪ 프로젝트 구조 (25.07.25 updated)
 ```bash
 AI03-Project-1/
 ├── data/                    # 원본 및 전처리된 데이터
