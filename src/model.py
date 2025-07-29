@@ -6,19 +6,22 @@
 # src/models/model.py
 
 import torchvision
+from torchvision.models.detection import FasterRCNN_ResNet50_FPN_Weights
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 from torchvision.models.detection.rpn import AnchorGenerator
 
 
 def get_model(
     num_classes: int,
-    model_name: str = "fasterrcnn_mobilenet_v3_large_fpn",
+    model_name: str = "mobilenet",
     pretrained: bool = True,
     anchor_sizes=None,
     aspect_ratios=None,
     min_size: int = 350,
-    rpn_pre_nms_top_n: int = 2000,
-    rpn_post_nms_top_n: int = 1000,
+    rpn_pre_nms_top_n_train: int = 2000,
+    rpn_post_nms_top_n_train: int = 1000,
+    rpn_pre_nms_top_n_test: int = 1000,
+    rpn_post_nms_top_n_test: int = 1000,
 ):
     """
     지정된 이름과 클래스 개수에 맞는 pre-trained object detection 모델을 반환.
@@ -39,13 +42,14 @@ def get_model(
     weights = "DEFAULT" if pretrained else None
     # ====================================================================
     # 1. Baseline 코드 모델
-    if model_name == "fasterrcnn_mobilenet_v3_large_fpn":
+    if model_name == "mobilenet":
         model = torchvision.models.detection.fasterrcnn_mobilenet_v3_large_fpn(
             weights=weights
         )
+
     # ====================================================================
     # 2. Faster-RCNN (resnet 기반)
-    elif model_name == "fasterrcnn_resnet50_fpn":
+    elif model_name == "resnet":
         if anchor_sizes is None:
             anchor_sizes = ((8,), (16,), (24,), (32,), (40,))
         if aspect_ratios is None:
@@ -53,11 +57,19 @@ def get_model(
         anchor_generator = AnchorGenerator(anchor_sizes, aspect_ratios)
 
         model = torchvision.models.detection.fasterrcnn_resnet50_fpn(
-            weights=weights, rpn_anchor_generator=anchor_generator, min_size=min_size
+            weights=FasterRCNN_ResNet50_FPN_Weights.COCO_V1,
+            rpn_anchor_generator=anchor_generator,
+            min_size=min_size,  # 작은 객체를 위한 이미지 크기
+            box_batch_size_per_image=100,  # proposal 수 조절
         )
+
         # RPN proposal 개수 조정
-        model.rpn.pre_nms_top_n["training"] = rpn_pre_nms_top_n
-        model.rpn.post_nms_top_n["training"] = rpn_post_nms_top_n
+        # model.rpn.pre_nms_top_n["training"] = rpn_pre_nms_top_n
+        # model.rpn.post_nms_top_n["training"] = rpn_post_nms_top_n
+        model.rpn.pre_nms_top_n_train = rpn_pre_nms_top_n_train
+        model.rpn.post_nms_top_n_train = rpn_post_nms_top_n_train
+        model.rpn.pre_nms_top_n_test = rpn_pre_nms_top_n_test
+        model.rpn.post_nms_top_n_test = rpn_post_nms_top_n_test
 
     else:
         raise ValueError(f"지원하지 않는 모델 이름입니다: {model_name}")

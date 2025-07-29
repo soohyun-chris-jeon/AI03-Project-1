@@ -29,6 +29,7 @@ TRAIN_ANNO_DIR = RAW_DATA_DIR / "train_annotations"
 TEST_IMAGE_DIR = RAW_DATA_DIR / "test_images"
 SAVE_PATH = PROCESSED_DATA_DIR / "train_df.csv"
 LABEL_MAP_PATH = PROCESSED_DATA_DIR / "label_map.json"
+PROCESSED_TRAIN_CSV = PROCESSED_DATA_DIR / "train_df_processed.csv"
 
 # --- 모델 설정 ---
 MODEL_NAME = "fasterrcnn_mobilenet_v3_large_fpn"

@@ -65,9 +65,11 @@ def main(args):
     # --- 2. 데이터 준비 ---
     # NUM_CLASSES를 label_map을 통해 동적으로 설정 (배경 포함)
     NUM_CLASSES = len(label_map["id_to_idx"]) + 1
-
+    print(f"num of classes: {NUM_CLASSES}")
     # 2. 모델 로드
-    model = get_model(num_classes=NUM_CLASSES).to(config.DEVICE)
+    model = get_model(num_classes=NUM_CLASSES, model_name=args.model_name).to(
+        config.DEVICE
+    )
     model.load_state_dict(torch.load(args.checkpoint, map_location=config.DEVICE))
     model.eval()
     print(f"Model loaded from {args.checkpoint}")
@@ -199,7 +201,7 @@ if __name__ == "__main__":
         help="Path to the model checkpoint file (.pt)",
     )
     parser.add_argument(
-        "--model-name",
+        "--model_name",
         type=str,
         default="BASELINE",
         help="Name of the model architecture to use",
