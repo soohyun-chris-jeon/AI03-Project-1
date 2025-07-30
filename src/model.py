@@ -19,7 +19,7 @@ def get_model(
     aspect_ratios=None,
     min_size: int = 350,
     rpn_pre_nms_top_n_train: int = 2000,
-    rpn_post_nms_top_n_train: int = 1000,
+    rpn_post_nms_top_n_train: int = 2000,
     rpn_pre_nms_top_n_test: int = 1000,
     rpn_post_nms_top_n_test: int = 1000,
 ):

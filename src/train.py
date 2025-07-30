@@ -150,7 +150,7 @@ def train(args):
 
             metric.update(predictions, targets)
 
-            # IoU 평가 메트릭
+            # 2. IoU 평가 메트릭
             for i in range(len(predictions)):
                 pred_boxes = predictions[i]["boxes"]
                 gt_boxes = targets[i]["boxes"]
