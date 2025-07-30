@@ -4,6 +4,7 @@
 # 최종 아웃풋을 앙상블하는 코드
 # src/ensemble.py
 
+import argparse  # argparse 라이브러리 import
 import datetime
 import os
 import re
@@ -13,18 +14,20 @@ import cv2
 import pandas as pd
 from ensemble_boxes import weighted_boxes_fusion
 from tqdm import tqdm
+from utils import get_unique_filepath
 
 # --- 1. 설정 (모델 추가) ---
 SUBMISSION_FILES = [
     "./output/submission_250729(2)_RESNET.csv",
     "./output/submission_YOLO.csv",
+    "./output/submission_250730_mobilenet.csv",
 ]
 TEST_IMAGE_DIR = Path("./data/raw/ai03-level1-project/test_images")
 today_str = datetime.date.today().strftime("%y%m%d")
 ENSEMBLED_SUBMISSION_FILE = f"./output/submission_ensemble_{today_str}.csv"
 IOU_THR = 0.55
 SKIP_BOX_THR = 0.0001
-WEIGHTS = [2, 1]
+# WEIGHTS = [2, 1]
 
 
 # predict.py에서 사용했던 id 추출 함수를 가져옴
@@ -35,7 +38,7 @@ def extract_image_id(filename: str) -> int:
         return hash(filename)
 
 
-def main():
+def main(args):
     print("--- Ensemble Start ---")
 
     # --- 2. 데이터 준비 ---
@@ -89,7 +92,7 @@ def main():
             boxes_list,  # 첫 번째 인자: 박스 리스트
             scores_list,  # 두 번째 인자: 점수 리스트
             labels_list,  # 세 번째 인자: 라벨 리스트
-            weights=WEIGHTS,
+            weights=args.WEIGHTS,
             iou_thr=IOU_THR,
             skip_box_thr=SKIP_BOX_THR,
         )
@@ -146,13 +149,29 @@ def main():
             "score",
         ]
     ]
+    unique_submission_path = get_unique_filepath(ENSEMBLED_SUBMISSION_FILE)
 
-    final_df.to_csv(ENSEMBLED_SUBMISSION_FILE, index=False)
+    final_df.to_csv(unique_submission_path, index=False)
 
     print("\n--- Ensemble Finished! ---")
-    print(f"Ensembled submission file saved to '{ENSEMBLED_SUBMISSION_FILE}'")
+    print(f"Ensembled submission file saved to '{unique_submission_path}'")
     print(final_df.head())
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(
+        description="Ensemble multiple submission files using WBF"
+    )
+
+    # 여기서 실험마다 바꾸고 싶은 파라미터를 정의
+    parser.add_argument(
+        "--WEIGHTS",
+        type=float,
+        nargs="+",
+        required=True,
+        help="Space-separated list of weights for each model (e.g., --WEIGHTS 2 1)",
+    )
+    args = parser.parse_args()
+
+    print(args)
+    main(args)

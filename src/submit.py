@@ -203,7 +203,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--model_name",
         type=str,
-        default="BASELINE",
+        default="mobilenet",
         help="Name of the model architecture to use",
     )
     parser.add_argument(

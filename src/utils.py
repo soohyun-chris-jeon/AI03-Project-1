@@ -166,8 +166,10 @@ def get_unique_filepath(filepath: Path) -> Path:
     주어진 파일 경로가 이미 존재할 경우, 파일 이름 뒤에 (2), (3)... 등을 붙여
     중복되지 않는 새로운 경로를 반환합니다.
     """
+    filepath = Path(filepath)  # <-- 이 한 줄 추가!
+
     if not filepath.exists():
-        return filepath
+        return str(filepath)  # 반환할 때는 다시 문자열로
 
     parent = filepath.parent
     stem = filepath.stem  # 파일 이름 (확장자 제외)
