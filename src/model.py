@@ -47,6 +47,7 @@ def get_model(
             weights=weights
         )
 
+
     # ====================================================================
     # 2. Faster-RCNN (resnet 기반)
     elif model_name == "resnet":
