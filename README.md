@@ -6,7 +6,10 @@
 - 최종 발표: 7/31(목) 
 - [프로젝트1 가이드](https://codeit.notion.site/AI-1b36fd228e8d80bd9f6dc99b409f952c)  
 - [최종보고서_3팀](https://drive.google.com/file/d/1voFiNrO8XJeMeRKljphgkNjDnpDwOGYt/view?usp=sharing)
-
+- 프로젝트 일지
+    * [전수현](https://github.com/soohyun-chris-jeon/AI03-Project-1/blob/main/ProjectLog.md)
+    * [조계승](https://www.notion.so/AI03-Project-1-1f41165973bd8039b616c82d266f12f1?source=copy_link)
+    * [배진석](https://www.notion.so/Daily-2310a966ac2780c19e41e6e5e6e8b54f?source=copy_link)
 ## ⚪ 프로젝트 구조 (25.07.25 updated)
 ```bash
 AI03-Project-1/
